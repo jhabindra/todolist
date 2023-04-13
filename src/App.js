@@ -1,5 +1,6 @@
 import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 
 import {useState} from 'react'
@@ -18,15 +19,27 @@ function App() {
   const addTask =()=>{
     // const newTodoList = [...todoList, newTask]
     // setTodoList(newTodoList)
+
+    //make object of task
+
+    const task ={
+      id : todoList.length===0 ? 1:todoList[todoList.length -1].id+1,
+      task:newTask
+    }
     if(newTask != '')
-    setTodoList([...todoList,newTask])
+    setTodoList([...todoList,task])
     else 
        alert('Please fill the input box')
+
+
+
+      console.log(task)
 
   }
 
 
-  const deleteTask = (taskName)=>{
+  const deleteTask = (idNo)=>{
+      console.log(idNo)
       const newTodoList =todoList.filter((task)=>{
         // if(task == taskName){
         //   return false
@@ -36,7 +49,7 @@ function App() {
         // }
 
 
-        return task != taskName
+        return task.id != idNo
 
        
       })
@@ -46,8 +59,9 @@ function App() {
 
   return (
     <div className="App">
+      <div className='container'>
       <div className="addTask">
-        <input id='task' onChange={handlechange} name='task'/>
+        <input id='task'  onChange={handlechange} name='task'/>
         <button onClick={addTask}>Add Task</button>
 
       </div>
@@ -65,9 +79,9 @@ function App() {
             
                 <tbody>
                   <tr>
-                    <td>{task}</td>
+                    <td>{task.task}</td>
                     <td>
-                    <button onClick={()=>deleteTask(task)}>X</button>
+                    <button onClick={()=>deleteTask(task.id)}>X</button>
                     </td>
                   </tr>
                 </tbody>
@@ -78,6 +92,7 @@ function App() {
           })
          }
          </table>
+      </div>
       </div>
     </div>
   );
